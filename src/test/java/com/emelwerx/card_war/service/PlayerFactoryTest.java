@@ -1,19 +1,28 @@
 package com.emelwerx.card_war.service;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
 import org.junit.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.emelwerx.card_war.model.*;
 
 public class PlayerFactoryTest {
+	@InjectMocks
 	private PlayerFactory target;
+	
+	@Mock
+	private DeckFactory deckFactory;
 	
 	@Before
 	public void setup() {
-		target = new PlayerFactory();
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
@@ -25,25 +34,16 @@ public class PlayerFactoryTest {
 		assertNotNull(players);
 	}
 	
-	@Test
-	public void factoryShouldCreateNPlayers() {
-		//setup
-		int n = 3;
-		
-		//execute
-		List<Player> players = target.create(n);
-		
-		//verify
-		assertEquals(n, players.size());
-	}
 	
 	@Test
-	public void newPlayerHasEmptyDeck() {
+	public void whenCreateThenCallDeckFactoryNTimes() {
+		//setup
+		int n = 3;
+
 		//execute
-		List<Player> players = target.create(1);
-		Deck deck = players.get(0).getDeck();
+		target.create(n);
 		
 		//verify
-		assertNotNull(deck);
+		verify(deckFactory, times(n)).create();
 	}
 }

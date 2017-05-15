@@ -8,4 +8,8 @@ public class Card {
 		this.suit = suit;
 		this.rank = rank;
 	}
+	
+	public String toString() {
+        return "Suit: " + suit + " Rank: " + rank;
+    }
 }

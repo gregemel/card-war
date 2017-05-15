@@ -42,5 +42,10 @@ public class DeckFactoryTest {
 		//verify
 		assertEquals(52, deck.getCards().size());
 	}
+	
+	@Test
+	public void newFrenchDeckShoudlBeShuffled() {
+		//TODO: need to verify this behavior
+	}
 
 }

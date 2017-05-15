@@ -3,8 +3,11 @@ package com.emelwerx.card_war.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.emelwerx.card_war.model.*;
 
+@Service
 public class DeckFactory {
 
 	public Deck create() {

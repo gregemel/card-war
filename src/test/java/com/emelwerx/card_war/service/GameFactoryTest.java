@@ -1,18 +1,31 @@
 package com.emelwerx.card_war.service;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.emelwerx.card_war.model.Game;
 
 public class GameFactoryTest {
+	@InjectMocks
 	private GameFactory target;
+	
+	@Mock
+	private PlayerFactory playerFactory;
+
+	@Mock
+	private DeckFactory deckFactory;
+
 	
 	@Before
 	public void setup() {
-		target = new GameFactory();
+		MockitoAnnotations.initMocks(this);
 	}
 	
 	@Test
@@ -25,34 +38,32 @@ public class GameFactoryTest {
 	}
 	
 	@Test
-	public void gameShouldNHavePlayers() {
+	public void whenCreateThenCallPlayerFactoryForNPlayers() {
 		//setup
 		int n = 3;
 		
 		//execute
-		Game game = target.create(n);
+		target.create(n);
 		
 		//verify
-		assertNotNull(game.getPlayers());
-		assertEquals(n, game.getPlayers().size());
+		verify(playerFactory, times(1)).create(n);
 	}
 	
 	@Test
-	public void gameShouldHaveFrenchGameDeck() {
+	public void whenCreateThenCallDeckFactoryForFrenchGameDeck() {
 		//execute
-		Game game = target.create(0);
+		target.create(0);
 		
 		//verify
-		assertNotNull(game.getDeckGame());
-		assertEquals(52, game.getDeckGame().getCards().size());
+		verify(deckFactory, times(1)).createFrench();
 	}
 	
 	@Test
-	public void gameShouldHaveEmptyPotDeck() {
+	public void whenCreateThenCallDeckFactoryCreateForEmptyPotDeck() {
 		//execute
-		Game game = target.create(0);
-		
+		target.create(0);
+
 		//verify
-		assertNotNull(game.getDeckPot());
+		verify(deckFactory, times(1)).create();
 	}
 }
